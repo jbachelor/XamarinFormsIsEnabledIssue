@@ -30,6 +30,7 @@ namespace IsEnabledIssue
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<IsEnabledIssuePage, IsEnabledIssuePageViewModel>();
         }
     }
 }
