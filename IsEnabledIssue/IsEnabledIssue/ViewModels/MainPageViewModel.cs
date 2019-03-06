@@ -18,6 +18,7 @@ namespace IsEnabledIssue.ViewModels
         public MainPageViewModel(INavigationService navigationService)
             : base(navigationService)
         {
+            Title = "IsEnabled Issue";
             NavToIssuePageCommand = new DelegateCommand(OnNavToIssuePageTapped);
         }
 

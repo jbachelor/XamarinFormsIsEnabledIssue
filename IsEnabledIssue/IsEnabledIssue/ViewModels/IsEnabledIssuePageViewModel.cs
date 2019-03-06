@@ -16,6 +16,8 @@ namespace IsEnabledIssue.ViewModels
         public DelegateCommand IsEnabledAboveTappedCommand { get; set; }
         public DelegateCommand IsEnabledBelowTappedCommand { get; set; }
 
+        int _numberOfTimesButtonsHaveBeenEnabled = 0;
+
         private bool _shouldEnableButtons;
         public bool ShouldEnableButtons
         {
@@ -30,10 +32,18 @@ namespace IsEnabledIssue.ViewModels
             set { SetProperty(ref _entryText, value); }
         }
 
+        private string _explanationText;
+        public string ExplanationText
+        {
+            get { return _explanationText; }
+            set { SetProperty(ref _explanationText, value); }
+        }
+
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "IsEnabled Issue";
             ShouldEnableButtons = false;
+            SetExplanationText();
 
             IsEnabledAboveTappedCommand = new DelegateCommand(OnIsEnabledAboveTapped);
             IsEnabledBelowTappedCommand = new DelegateCommand(OnIsEnabledBelowTapped);
@@ -61,11 +71,21 @@ namespace IsEnabledIssue.ViewModels
             if (EntryText.Length > 4)
             {
                 ShouldEnableButtons = true;
+                _numberOfTimesButtonsHaveBeenEnabled++;
+                if(_numberOfTimesButtonsHaveBeenEnabled == 1)
+                {
+                    ExplanationText += $"\n\nInterestingly enough, once {nameof(ShouldEnableButtons)} changes from false to true, the top button starts working properly.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
+                }
             }
             else
             {
                 ShouldEnableButtons = false;
             }
+        }
+
+        private void SetExplanationText()
+        {
+            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(ShouldEnableButtons)} property in the ViewModel, but only the bottom button behaves as expected.";
         }
     }
 }
