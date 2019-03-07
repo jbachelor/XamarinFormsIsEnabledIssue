@@ -32,7 +32,7 @@ namespace IsEnabledIssue.ViewModels
 
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "IsEnabled Issue";
+            Title = "Using CanExecute";
             EntryHasAtLeastFiveCharacters = false;
 
             MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped);
