@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using Prism.Commands;
@@ -8,12 +9,16 @@ namespace IsEnabledIssue.ViewModels
     public class IsEnabledIssuePageViewModel : ViewModelBase
     {
         public DelegateCommand MyButtonTappedCommand { get; set; }
-        
+
         private bool _entryHasAtLeastFiveCharacters;
         public bool EntryHasAtLeastFiveCharacters
         {
             get { return _entryHasAtLeastFiveCharacters; }
-            set { SetProperty(ref _entryHasAtLeastFiveCharacters, value); }
+            set
+            {
+                SetProperty(ref _entryHasAtLeastFiveCharacters, value);
+                MyButtonTappedCommand?.RaiseCanExecuteChanged();
+            }
         }
 
         private string _entryText;
@@ -35,9 +40,15 @@ namespace IsEnabledIssue.ViewModels
             Title = "Using CanExecute";
             EntryHasAtLeastFiveCharacters = false;
 
-            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped);
+            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand);
 
             this.PropertyChanged += OnEntryTextChanged;
+        }
+
+        private bool CanExecuteCommand()
+        {
+            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(CanExecuteCommand)}:  {EntryHasAtLeastFiveCharacters}");
+            return EntryHasAtLeastFiveCharacters;
         }
 
         private void OnMyButtonTapped()
@@ -47,7 +58,7 @@ namespace IsEnabledIssue.ViewModels
 
         void OnEntryTextChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName != nameof(EntryText))
+            if (e.PropertyName != nameof(EntryText))
             {
                 return;
             }
