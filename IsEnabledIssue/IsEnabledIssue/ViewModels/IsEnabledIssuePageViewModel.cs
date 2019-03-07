@@ -74,7 +74,7 @@ namespace IsEnabledIssue.ViewModels
                 _numberOfTimesButtonsHaveBeenEnabled++;
                 if(_numberOfTimesButtonsHaveBeenEnabled == 1)
                 {
-                    ExplanationText += $"\n\nInterestingly enough, once {nameof(EntryHasAtLeastFiveCharacters)} changes from false to true, the top button starts working properly.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
+                    ExplanationText += $"\n\nInterestingly enough, once {nameof(EntryHasAtLeastFiveCharacters)} changes from false to true, the top button starts working properly. Go back to the entry and delete enough so that there are less than 5 characters, and you'll see both buttons disable, and the label asking you to enter at least 5 characters will become visible again.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
                 }
             }
             else
@@ -85,7 +85,7 @@ namespace IsEnabledIssue.ViewModels
 
         private void SetExplanationText()
         {
-            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(EntryHasAtLeastFiveCharacters)} property in the ViewModel, but only the bottom button behaves as expected.";
+            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(EntryHasAtLeastFiveCharacters)} property in the ViewModel, but only the bottom button behaves as expected. The label's IsVisible property underneath the entry is bound to the same property using an invert boolean converter, so that it should disappear once you enter 5 characters.";
         }
     }
 }
