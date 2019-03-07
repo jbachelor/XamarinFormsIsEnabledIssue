@@ -21,8 +21,8 @@
                    PropertyChanged="OnEntryIsValidTextChanged" />
         </StackLayout>
         <!--    An implicit style for Buttons is in App.xaml    -->
-        <Button Text="IsEnabled ABOVE Command"
-                Command="{Binding IsEnabledAboveTappedCommand}" />       
+        <Button Text="Enable When Entry Is Valid"
+                Command="{Binding MyButtonTappedCommand}" />       
         <Label Text="{Binding ExplanationText}" />
     </StackLayout>
 </ContentPage>

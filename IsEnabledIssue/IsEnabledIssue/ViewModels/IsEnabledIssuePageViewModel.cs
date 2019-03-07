@@ -1,23 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Diagnostics;
 using Prism.Commands;
 using Prism.Navigation;
-using Prism.Logging;
-using Prism.Services;
-using System.Diagnostics;
-using System.ComponentModel;
 
 namespace IsEnabledIssue.ViewModels
 {
     public class IsEnabledIssuePageViewModel : ViewModelBase
     {
-        public DelegateCommand IsEnabledAboveTappedCommand { get; set; }
-        public DelegateCommand IsEnabledBelowTappedCommand { get; set; }
-
-        int _numberOfTimesButtonsHaveBeenEnabled = 0;
-
+        public DelegateCommand MyButtonTappedCommand { get; set; }
+        
         private bool _entryHasAtLeastFiveCharacters;
         public bool EntryHasAtLeastFiveCharacters
         {
@@ -43,22 +34,15 @@ namespace IsEnabledIssue.ViewModels
         {
             Title = "IsEnabled Issue";
             EntryHasAtLeastFiveCharacters = false;
-            SetExplanationText();
 
-            IsEnabledAboveTappedCommand = new DelegateCommand(OnIsEnabledAboveTapped);
-            IsEnabledBelowTappedCommand = new DelegateCommand(OnIsEnabledBelowTapped);
+            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped);
 
             this.PropertyChanged += OnEntryTextChanged;
         }
 
-        private void OnIsEnabledAboveTapped()
+        private void OnMyButtonTapped()
         {
-            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(OnIsEnabledAboveTapped)}");
-        }
-
-        private void OnIsEnabledBelowTapped()
-        {
-            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(OnIsEnabledBelowTapped)}");
+            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(OnMyButtonTapped)}");
         }
 
         void OnEntryTextChanged(object sender, PropertyChangedEventArgs e)
@@ -71,21 +55,11 @@ namespace IsEnabledIssue.ViewModels
             if (EntryText.Length > 4)
             {
                 EntryHasAtLeastFiveCharacters = true;
-                _numberOfTimesButtonsHaveBeenEnabled++;
-                if(_numberOfTimesButtonsHaveBeenEnabled == 1)
-                {
-                    ExplanationText += $"\n\nInterestingly enough, once {nameof(EntryHasAtLeastFiveCharacters)} changes from false to true, the top button starts working properly. Go back to the entry and delete enough so that there are less than 5 characters, and you'll see both buttons disable, and the label asking you to enter at least 5 characters will become visible again.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
-                }
             }
             else
             {
                 EntryHasAtLeastFiveCharacters = false;
             }
-        }
-
-        private void SetExplanationText()
-        {
-            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(EntryHasAtLeastFiveCharacters)} property in the ViewModel, but only the bottom button behaves as expected. The label's IsVisible property underneath the entry is bound to the same property using an invert boolean converter, so that it should disappear once you enter 5 characters.";
         }
     }
 }
