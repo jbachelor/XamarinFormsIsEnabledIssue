@@ -15,18 +15,14 @@
                FontAttributes="Italic" />
         <StackLayout Orientation="Horizontal"
                      Spacing="20">
-            <Label Text="ShouldEnableButtons:" />
+            <Label Text="EntryHasAtLeastFiveCharacters:" />
             <Label Text="{Binding EntryHasAtLeastFiveCharacters}"
                    FontAttributes="Bold"
                    PropertyChanged="OnEntryIsValidTextChanged" />
         </StackLayout>
         <!--    An implicit style for Buttons is in App.xaml    -->
         <Button Text="IsEnabled ABOVE Command"
-                IsEnabled="{Binding EntryHasAtLeastFiveCharacters}"
-                Command="{Binding IsEnabledAboveTappedCommand}" />
-        <Button Text="IsEnabled BELOW Command"
-                Command="{Binding IsEnabledBelowTappedCommand}"
-                IsEnabled="{Binding EntryHasAtLeastFiveCharacters}" />
+                Command="{Binding IsEnabledAboveTappedCommand}" />       
         <Label Text="{Binding ExplanationText}" />
     </StackLayout>
 </ContentPage>
