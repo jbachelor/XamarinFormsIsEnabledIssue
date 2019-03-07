@@ -12,4 +12,10 @@
   <ItemGroup>
     <Folder Include="Views\Converters\" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\MainPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Views\MainPage.xaml.cs" />
+  </ItemGroup>
 </Project>

@@ -5,9 +5,7 @@
                         xmlns:converters="clr-namespace:IsEnabledIssue.Views.Converters;assembly=IsEnabledIssue"
                         x:Class="IsEnabledIssue.App">
     <Application.Resources>
-        <!-- Application resource dictionary -->
         <ResourceDictionary>
-            <!-- CONVERTERS    -->
             <converters:InvertBooleanConverter
                 x:Key="invertBoolean" />
             <Style TargetType="Button">

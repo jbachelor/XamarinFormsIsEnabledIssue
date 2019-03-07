@@ -23,13 +23,12 @@ namespace IsEnabledIssue
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync($"{nameof(NavigationPage)}/{nameof(IsEnabledIssuePage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<IsEnabledIssuePage, IsEnabledIssuePageViewModel>();
         }
     }
