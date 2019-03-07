@@ -33,9 +33,12 @@ namespace IsEnabledIssue.ViewModels
 
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "Using CanExecute";
+            Title = "Using ObservesProperty";
             EntryHasAtLeastFiveCharacters = false;
 
+            // NOTE: If you have more than one property that your command needs to monitor to
+            // determine whether or not it can execute, you can chain together as many ObservesProperty
+            // statements as you need.
             MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand)
                 .ObservesProperty(() => EntryHasAtLeastFiveCharacters);
 
