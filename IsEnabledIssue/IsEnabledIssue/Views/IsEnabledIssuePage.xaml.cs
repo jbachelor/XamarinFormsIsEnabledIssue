@@ -1,5 +1,4 @@
-using System.Diagnostics;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using Xamarin.Forms;
 
 namespace IsEnabledIssue.Views
@@ -11,7 +10,7 @@ namespace IsEnabledIssue.Views
             InitializeComponent();
         }
 
-        async void OnShouldEnableButtonsTextChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        async void OnEntryIsValidTextChanged(object sender, PropertyChangedEventArgs e)
         {
             var label = sender as Label;
 
