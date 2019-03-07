@@ -7,21 +7,21 @@
                  Padding="20">
         <Entry Placeholder="must have at least 5 characters"
                Keyboard="Email"
-               Text="{Binding EntryText}" />
+               Text="{Binding EntryText}" />       
         <StackLayout Orientation="Horizontal"
                      Spacing="20">
             <Label Text="ShouldEnableButtons:" />
-            <Label Text="{Binding ShouldEnableButtons}"
+            <Label Text="{Binding EntryHasAtLeastFiveCharacters}"
                    FontAttributes="Bold"
-                   PropertyChanged="OnShouldEnableButtonsTextChanged" />
+                   PropertyChanged="OnEntryIsValidTextChanged" />
         </StackLayout>
         <!--    An implicit style for Buttons is in App.xaml    -->
         <Button Text="IsEnabled ABOVE Command"
-                IsEnabled="{Binding ShouldEnableButtons}"
+                IsEnabled="{Binding EntryHasAtLeastFiveCharacters}"
                 Command="{Binding IsEnabledAboveTappedCommand}" />
         <Button Text="IsEnabled BELOW Command"
                 Command="{Binding IsEnabledBelowTappedCommand}"
-                IsEnabled="{Binding ShouldEnableButtons}" />
+                IsEnabled="{Binding EntryHasAtLeastFiveCharacters}" />
         <Label Text="{Binding ExplanationText}" />
     </StackLayout>
 </ContentPage>

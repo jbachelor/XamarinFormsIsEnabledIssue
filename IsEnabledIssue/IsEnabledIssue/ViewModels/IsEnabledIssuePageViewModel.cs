@@ -18,11 +18,11 @@ namespace IsEnabledIssue.ViewModels
 
         int _numberOfTimesButtonsHaveBeenEnabled = 0;
 
-        private bool _shouldEnableButtons;
-        public bool ShouldEnableButtons
+        private bool _entryHasAtLeastFiveCharacters;
+        public bool EntryHasAtLeastFiveCharacters
         {
-            get { return _shouldEnableButtons; }
-            set { SetProperty(ref _shouldEnableButtons, value); }
+            get { return _entryHasAtLeastFiveCharacters; }
+            set { SetProperty(ref _entryHasAtLeastFiveCharacters, value); }
         }
 
         private string _entryText;
@@ -42,7 +42,7 @@ namespace IsEnabledIssue.ViewModels
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "IsEnabled Issue";
-            ShouldEnableButtons = false;
+            EntryHasAtLeastFiveCharacters = false;
             SetExplanationText();
 
             IsEnabledAboveTappedCommand = new DelegateCommand(OnIsEnabledAboveTapped);
@@ -70,22 +70,22 @@ namespace IsEnabledIssue.ViewModels
 
             if (EntryText.Length > 4)
             {
-                ShouldEnableButtons = true;
+                EntryHasAtLeastFiveCharacters = true;
                 _numberOfTimesButtonsHaveBeenEnabled++;
                 if(_numberOfTimesButtonsHaveBeenEnabled == 1)
                 {
-                    ExplanationText += $"\n\nInterestingly enough, once {nameof(ShouldEnableButtons)} changes from false to true, the top button starts working properly.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
+                    ExplanationText += $"\n\nInterestingly enough, once {nameof(EntryHasAtLeastFiveCharacters)} changes from false to true, the top button starts working properly.\n\nTo see the issue again, you must navigate back, then return to this page. This page will get destroyed when you navigate back, effectively resetting the experiment for another run.";
                 }
             }
             else
             {
-                ShouldEnableButtons = false;
+                EntryHasAtLeastFiveCharacters = false;
             }
         }
 
         private void SetExplanationText()
         {
-            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(ShouldEnableButtons)} property in the ViewModel, but only the bottom button behaves as expected.";
+            ExplanationText=$"Both of the buttons above have their IsEnabled property wired up to the same {nameof(EntryHasAtLeastFiveCharacters)} property in the ViewModel, but only the bottom button behaves as expected.";
         }
     }
 }
