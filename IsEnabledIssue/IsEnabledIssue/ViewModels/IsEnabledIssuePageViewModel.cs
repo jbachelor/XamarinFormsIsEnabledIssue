@@ -14,11 +14,7 @@ namespace IsEnabledIssue.ViewModels
         public bool EntryHasAtLeastFiveCharacters
         {
             get { return _entryHasAtLeastFiveCharacters; }
-            set
-            {
-                SetProperty(ref _entryHasAtLeastFiveCharacters, value);
-                MyButtonTappedCommand?.RaiseCanExecuteChanged();
-            }
+            set { SetProperty(ref _entryHasAtLeastFiveCharacters, value); }
         }
 
         private string _entryText;
@@ -40,7 +36,8 @@ namespace IsEnabledIssue.ViewModels
             Title = "Using CanExecute";
             EntryHasAtLeastFiveCharacters = false;
 
-            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand);
+            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand)
+                .ObservesProperty(() => EntryHasAtLeastFiveCharacters);
 
             this.PropertyChanged += OnEntryTextChanged;
         }
