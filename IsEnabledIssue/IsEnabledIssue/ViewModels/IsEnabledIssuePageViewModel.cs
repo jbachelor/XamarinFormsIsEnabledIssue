@@ -33,19 +33,15 @@ namespace IsEnabledIssue.ViewModels
 
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
-            Title = "Using CanExecute";
+            Title = "Using ObservesCanExecute";
             EntryHasAtLeastFiveCharacters = false;
 
-            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand)
-                .ObservesProperty(() => EntryHasAtLeastFiveCharacters);
+            // WARNING: You can NOT chain together 'ObservesCanExecute' the way you can with
+            // ObservesProperty, because there can only be ONE CanExecute handler.
+            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped)
+                .ObservesCanExecute(() => EntryHasAtLeastFiveCharacters);
 
             this.PropertyChanged += OnEntryTextChanged;
-        }
-
-        private bool CanExecuteCommand()
-        {
-            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(CanExecuteCommand)}:  {EntryHasAtLeastFiveCharacters}");
-            return EntryHasAtLeastFiveCharacters;
         }
 
         private void OnMyButtonTapped()
