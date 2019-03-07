@@ -10,11 +10,11 @@ namespace IsEnabledIssue.ViewModels
     {
         public DelegateCommand MyButtonTappedCommand { get; set; }
 
-        private bool _entryHasAtLeastFiveCharacters;
-        public bool EntryHasAtLeastFiveCharacters
+        private bool _allowWhitespaceCharacters;
+        public bool AllowWhitespaceCharacters
         {
-            get { return _entryHasAtLeastFiveCharacters; }
-            set { SetProperty(ref _entryHasAtLeastFiveCharacters, value); }
+            get { return _allowWhitespaceCharacters; }
+            set { SetProperty(ref _allowWhitespaceCharacters, value); }
         }
 
         private string _entryText;
@@ -34,43 +34,40 @@ namespace IsEnabledIssue.ViewModels
         public IsEnabledIssuePageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Using ObservesProperty";
-            EntryHasAtLeastFiveCharacters = false;
 
-            // NOTE: If you have more than one property that your command needs to monitor to
-            // determine whether or not it can execute, you can chain together as many ObservesProperty
-            // statements as you need.
-            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteCommand)
-                .ObservesProperty(() => EntryHasAtLeastFiveCharacters);
-
-            this.PropertyChanged += OnEntryTextChanged;
+            /*
+            NOTE: If you have more than one property that your command needs to monitor to
+            determine whether or not it can execute, you can chain together as many ObservesProperty
+            statements as you need.
+            
+            If you skip using 'ObservesProperty', you need to add a call to MyButtonTappedCommand.RaiseCanExecuteChanged
+            in the setters for EntryText and AllowWhitespaceCharacters.
+             */
+            MyButtonTappedCommand = new DelegateCommand(OnMyButtonTapped, CanExecuteOnMyButtonTapped)
+                .ObservesProperty(() => EntryText)
+                .ObservesProperty(() => AllowWhitespaceCharacters);
         }
 
-        private bool CanExecuteCommand()
+        private bool CanExecuteOnMyButtonTapped()
         {
-            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(CanExecuteCommand)}:  {EntryHasAtLeastFiveCharacters}");
-            return EntryHasAtLeastFiveCharacters;
+            var commandCanExecute = false;
+            if (AllowWhitespaceCharacters == true)
+            {
+                commandCanExecute = EntryText?.Length > 4;
+            }
+            else
+            {
+                var entryWithoutWhitespace = EntryText?.Replace(" ", string.Empty);
+                Debug.WriteLine($"**** {this.GetType().Name}.{nameof(CanExecuteOnMyButtonTapped)}:  {nameof(entryWithoutWhitespace)}=[{entryWithoutWhitespace}]");
+                commandCanExecute = entryWithoutWhitespace?.Length > 4;
+            }
+            Debug.WriteLine($"**** {this.GetType().Name}.{nameof(CanExecuteOnMyButtonTapped)}:  {commandCanExecute}");
+            return commandCanExecute;
         }
 
         private void OnMyButtonTapped()
         {
             Debug.WriteLine($"**** {this.GetType().Name}.{nameof(OnMyButtonTapped)}");
-        }
-
-        void OnEntryTextChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != nameof(EntryText))
-            {
-                return;
-            }
-
-            if (EntryText.Length > 4)
-            {
-                EntryHasAtLeastFiveCharacters = true;
-            }
-            else
-            {
-                EntryHasAtLeastFiveCharacters = false;
-            }
         }
     }
 }

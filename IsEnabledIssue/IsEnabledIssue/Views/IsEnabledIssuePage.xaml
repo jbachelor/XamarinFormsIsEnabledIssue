@@ -11,18 +11,16 @@
         <Label Text="Please enter at least 5 characters"
                Margin="0,-15,0,0"
                FontSize="Micro"
-               IsVisible="{Binding EntryHasAtLeastFiveCharacters, Converter={StaticResource invertBoolean}}"
+               IsVisible="{Binding IsEnabled, Source={x:Reference mySweetButton}, Converter={StaticResource invertBoolean}}"
                FontAttributes="Italic" />
-        <StackLayout Orientation="Horizontal"
-                     Spacing="20">
-            <Label Text="EntryHasAtLeastFiveCharacters:" />
-            <Label Text="{Binding EntryHasAtLeastFiveCharacters}"
-                   FontAttributes="Bold"
-                   PropertyChanged="OnEntryIsValidTextChanged" />
-        </StackLayout>
         <!--    An implicit style for Buttons is in App.xaml    -->
-        <Button Text="Enable When Entry Is Valid"
-                Command="{Binding MyButtonTappedCommand}" />       
+        <Button x:Name="mySweetButton"
+                Text="Enable When Entry Is Valid"
+                Command="{Binding MyButtonTappedCommand}" />
+        <StackLayout Orientation="Horizontal">
+            <Switch IsToggled="{Binding AllowWhitespaceCharacters}" />
+            <Label Text="Count whitespace characters" />
+        </StackLayout>
         <Label Text="{Binding ExplanationText}" />
     </StackLayout>
 </ContentPage>
