@@ -22,4 +22,5 @@ There are a couple of reasons for this repository:
 ## Resources
 * [Xamarin.Forms IsEnabled issue](https://github.com/xamarin/Xamarin.Forms/issues/2758)
 * [Xamarin.Forms IsEnabled documentation](https://docs.microsoft.com/en-us/dotnet/api/xamarin.forms.visualelement.isenabled?view=xamarin-forms)
+* [Xamarin.Forms Button documentation](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/button)
 * [Prism Commanding documentation](http://prismlibrary.github.io/docs/commanding.html)
